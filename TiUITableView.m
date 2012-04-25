@@ -321,6 +321,13 @@
 	return height < 1 ? tableview.rowHeight : height;
 }
 
+//allows use of scrollsToTop property. This is useful when you have 
+//multiple tables in your app, and only want this behaviour on one.
+-(void)setScrollsToTop_:(id)value
+{
+	[[self tableView] setScrollsToTop:[TiUtils boolValue:value]];
+}
+
 -(void)setBackgroundColor:(TiColor*)color onTable:(UITableView*)table
 {
 	UIColor* defaultColor = [table style] == UITableViewStylePlain ? [UIColor whiteColor] : [UIColor groupTableViewBackgroundColor];
