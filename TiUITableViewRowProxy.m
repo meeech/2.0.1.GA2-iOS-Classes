@@ -350,6 +350,10 @@ TiProxy * DeepScanForProxyOfViewContainingPoint(UIView * targetView, CGPoint poi
 			width -= [image size].width;			
 		}
 	}
+
+    if ([[table tableView] style]==UITableViewStyleGrouped) {
+        width -= ([TiUtils isIPad]==NO) ? 20 : 60;
+    }
 	
 	return width;
 }
