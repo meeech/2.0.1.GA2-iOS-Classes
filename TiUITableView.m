@@ -1035,7 +1035,8 @@
 	{
 		if (searchField!=nil)
 		{
-            animateHide = YES;
+		    //This is the one that animates the view away when first drawing table.
+            animateHide = NO;
             [self hideSearchScreen:nil];
 		}
 	}
@@ -1411,7 +1412,7 @@
 		if (searchHidden)
 		{
             // This seems like inconsistent behavior, as much of our 'search hide' logic works out to
-            
+            //does not control initial hide
             animateHide = YES;
 			[self hideSearchScreen:nil];
 			return;
@@ -1435,6 +1436,7 @@
 		searchHidden = YES;
 		if (searchField)
 		{
+		    //Does not control initial
             animateHide = YES;
 			[self hideSearchScreen:nil];
 		}
