@@ -99,8 +99,10 @@ DEFINE_EXCEPTIONS
 	}
 	else 
 	{
-		id image = [proxy_ valueForKey:@"image"];
+	   id image = [proxy_ valueForKey:@"image"];
        id background = [proxy_ valueForKey:@"backgroundImage"];
+       id tint = [proxy_ valueForKey:@"tintColor"];
+
        if (background != nil) {
            self = [super initWithCustomView:[proxy_ view]];
            self.target = self;
@@ -116,9 +118,14 @@ DEFINE_EXCEPTIONS
            UIImage *theimage = [[ImageLoader sharedLoader] loadImmediateStretchableImage:url];
            self = [super initWithImage:theimage style:[self style:proxy_] target:self action:@selector(clicked:)];
        }
-		else {
+       else {
            self = [super initWithTitle:[self title:proxy_] style:[self style:proxy_] target:self action:@selector(clicked:)];
-		}
+	   }
+
+       if(tint != nil && [self respondsToSelector:@selector(setTintColor:)]) {
+	       TiColor * theTintColor = [TiUtils colorValue:tint];
+           [self setTintColor:[theTintColor _color]];
+	   }
 	}
 	proxy = proxy_; // Don't retain
 
