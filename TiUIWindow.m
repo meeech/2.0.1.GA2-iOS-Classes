@@ -5,6 +5,7 @@
  * Please see the LICENSE included with this distribution for details.
  */
 #import "TiUIWindow.h"
+#import "TiUIWindowProxy.h"
 
 @implementation TiUIWindow
 
@@ -26,6 +27,15 @@
 
 	return gradientWrapperView;
 }
+
+
+-(void)frameSizeChanged:(CGRect)frame bounds:(CGRect)bounds
+{
+    [super frameSizeChanged:frame bounds:bounds];
+	[(TiUIWindowProxy*)[self proxy] performSelector:@selector(_updateTitleView) withObject:nil afterDelay:[[UIApplication sharedApplication] statusBarOrientationAnimationDuration] ];
+}
+
+
 
 @end
 
