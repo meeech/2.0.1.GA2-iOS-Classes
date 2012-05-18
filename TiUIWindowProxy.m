@@ -705,9 +705,20 @@
 			hasToolbar = (array != nil && [array count] > 0) ? YES : NO ;
 			BOOL translucent = [TiUtils boolValue:@"translucent" properties:properties def:NO];
 			BOOL animated = [TiUtils boolValue:@"animated" properties:properties def:hasToolbar];
+			id toolbarBackgroundImage = [properties valueForKey:@"backgroundImage"];
+			
 			[controller setToolbarItems:array animated:animated];
 			[ourNC setToolbarHidden:(hasToolbar == NO ? YES : NO) animated:animated];
 			[ourNC.toolbar setTranslucent:translucent];
+			
+			//toolbar which don't support setBackgroundImage (iOS < 5) will continue to have their default behaviour.
+			if(toolbarBackgroundImage && [ourNC.toolbar respondsToSelector:@selector(setBackgroundImage:forToolbarPosition:barMetrics:)]) {
+				UIImage * bgImage = [TiUtils image:toolbarBackgroundImage proxy:self];
+			    if (bgImage != nil) {
+					[ourNC.toolbar setBackgroundImage:bgImage forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
+			    }
+			}
+
 			[array release];
 			
 		}

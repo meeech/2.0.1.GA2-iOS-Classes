@@ -147,6 +147,17 @@
 	[toolBar setTranslucent:[TiUtils barTranslucencyForColor:newBarColor]];
 }
 
+-(void)setBackgroundImage_:(id)image
+{
+    UIImage* bgImage = [TiUtils loadBackgroundImage:image forProxy:self.proxy];
+
+	//toolbar which don't support setBackgroundImage (iOS < 5) will continue to have their default behaviour.
+    if (bgImage != nil && [toolBar respondsToSelector:@selector(setBackgroundImage:forToolbarPosition:barMetrics:)]) {
+		[toolBar setBackgroundImage:bgImage forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
+    }
+}
+
+
 -(void)setTranslucent_:(id)value
 {
 	[toolBar setTranslucent:[TiUtils boolValue:value]];
